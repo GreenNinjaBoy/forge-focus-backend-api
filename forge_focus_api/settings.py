@@ -11,15 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os
-import dj_database_url
-
-if os.path.exists('env.py'):
-    import env
-
-CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
-}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jp8tgx%0!c9-5_4u^+hjxxhy5w!m@6jqqw@0%kdxiafp1u43f2'
+SECRET_KEY = 'django-insecure-k%_f9d4@shp&zn+8fou%42c7diqqx2--o2l(c=bmafrnxn(h9d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,22 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django_extensions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary_storage',
-    'cloudinary',
-    'rest_framework',
-    'rest_framework_authtoken',
-    'dj_rest_auth',
-    'allauth',
-    'allauth.acount',
-    'dj_rest_auth.registration',
-    'allauth.socialaccount',
-    'corsheaders',
 ]
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
