@@ -64,8 +64,20 @@ SECRET_KEY = 'django-insecure-jp8tgx%0!c9-5_4u^+hjxxhy5w!m@6jqqw@0%kdxiafp1u43f2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    os.environ.get('ALLOWED_HOST'),
+]
 
+
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''),
+    re.IGNORECASE).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
+
+
+CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
