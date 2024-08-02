@@ -1,4 +1,4 @@
-from forge_focus.permissions import OwnerOnly
+from forge_focus_api.permissions import OwnerOnly
 from .serializers import GoalsSerializer
 from .models import Goals
 from rest_framework import generics, permissions
