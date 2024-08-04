@@ -27,7 +27,7 @@ class GoalsList(generics.ListCreateAPIView):
         (with null last), and then created_at.
         """
         if self.request.user.is_authenticated:
-            return self.request.user.goals.all().order_by('priority', 'created_at')
+            return self.request.user.goals.all().order_by('created_at')
         else:
             return Goals.objects.none() 
 
