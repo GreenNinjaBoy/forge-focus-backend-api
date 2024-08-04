@@ -44,6 +44,7 @@ class GoalsSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'name',
+            'reason',
             'image',
             'is_owner'
         ]
