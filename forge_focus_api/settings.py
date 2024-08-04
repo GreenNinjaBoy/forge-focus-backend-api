@@ -70,15 +70,14 @@ ALLOWED_HOSTS = [
 ]
 
 
-if 'CLIENT_ORIGIN_DEV' in os.environ:
-    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''),
-    re.IGNORECASE).group(0)
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        rf"https:\/\/.+?\.codeinstitute-ide\.net$",
-    ]
+# if 'CLIENT_ORIGIN_DEV' in os.environ:
+#     extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''),
+#     re.IGNORECASE).group(0)
+#     CORS_ALLOWED_ORIGIN_REGEXES = [
+#         rf"https:\/\/.+?\.codeinstitute-ide\.net$",
+#     ]
 
 
-CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
@@ -119,6 +118,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+CORS_ALLOWED_ORIGIN = [
+    os.environ.get('CLIENT_ORIGIN_DEV')
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
 ROOT_URLCONF = 'forge_focus_api.urls'
 
 TEMPLATES = [
@@ -155,7 +161,10 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.herokuapp.com",
     "https://*.gitpod.io",
     "https://*.codeinstitute-ide.net",
+    "https://3000-greenninjab-forgefocusp-neyw2jhfm9n.ws.codeinstitute-ide.net/",
 ]
+
+CSRF_COOKIE_NAME = 'csrftoken'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
