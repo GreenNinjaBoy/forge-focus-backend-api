@@ -119,10 +119,11 @@ MIDDLEWARE = [
 ]
 
 
-CORS_ALLOWED_ORIGIN = [
-    os.environ.get('CLIENT_ORIGIN_DEV')
-]
+# CORS_ALLOWED_ORIGIN = [
+#     os.environ.get('CLIENT_ORIGIN_DEV')
+# ]
 
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'forge_focus_api.urls'
