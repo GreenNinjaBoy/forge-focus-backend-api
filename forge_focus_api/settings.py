@@ -32,8 +32,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [(
         'rest_framework.authentication.SessionAuthentication'
-         if 'DEV' in os.environ
-         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+        #  if 'DEV' in os.environ
+        #  else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     )],
     'DEFAULT_PAGINATION_CLASS':
     'rest_framework.pagination.PageNumberPagination',
@@ -60,7 +60,9 @@ REST_AUTH_SERIALIZERS = {
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = [
+     os.environ.get('SECRET_KEY')
+]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
@@ -119,11 +121,12 @@ MIDDLEWARE = [
 ]
 
 
-# CORS_ALLOWED_ORIGIN = [
-#     os.environ.get('CLIENT_ORIGIN_DEV')
-# ]
+CORS_ALLOWED_ORIGIN = [
+    os.environ.get('CLIENT_ORIGIN_DEV'),
+    'https://5173-greenninjab-forgefocusp-jdlizymupf6.ws.codeinstitute-ide.net/'
+]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'forge_focus_api.urls'
