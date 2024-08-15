@@ -32,8 +32,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [(
         'rest_framework.authentication.SessionAuthentication'
-        #  if 'DEV' in os.environ
-        #  else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+         if 'DEV' in os.environ
+         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     )],
     'DEFAULT_PAGINATION_CLASS':
     'rest_framework.pagination.PageNumberPagination',
@@ -69,6 +69,7 @@ DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
+    '8000-greenninjab-forgefocusb-pqzs5ywqc6f.ws.codeinstitute-ide.net'
 ]
 
 
@@ -123,7 +124,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGIN = [
     os.environ.get('CLIENT_ORIGIN_DEV'),
-    'https://5173-greenninjab-forgefocusp-jdlizymupf6.ws.codeinstitute-ide.net/'
+    'https://5173-greenninjab-forgefocusp-jdlizymupf6.ws.codeinstitute-ide.net'
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
