@@ -77,7 +77,8 @@ DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
-    '8000-greenninjab-forgefocusb-pqzs5ywqc6f.ws.codeinstitute-ide.net'
+    '8000-greenninjab-forgefocusb-pqzs5ywqc6f.ws.codeinstitute-ide.net',
+    'https://forge-focus-api-backend-83543ef108af.herokuapp.com',
 ]
 
 
