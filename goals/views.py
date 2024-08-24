@@ -3,7 +3,6 @@ from .serializers import GoalsSerializer
 from .models import Goals
 from rest_framework import generics, permissions
 
-
 class GoalsList(generics.ListCreateAPIView):
     """
      This view will return a list of goals area for the
@@ -31,7 +30,7 @@ class GoalsList(generics.ListCreateAPIView):
         else:
             return Goals.objects.none() 
 
-class GoalsDetails(generics.RetrieveUpdateDestroyAPIView):
+class GoalsDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     This view will return a specific goal where 
     pk will be the ID of the goal.
