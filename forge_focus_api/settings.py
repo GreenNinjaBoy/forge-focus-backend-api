@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'corsheaders',
     'goals',
+    'tasks',
 ]
 
 MIDDLEWARE = [

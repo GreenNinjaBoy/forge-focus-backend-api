@@ -1,3 +1,5 @@
+# views.py
+from forge_focus_api.permissions import OwnerOnly
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
 from .models import Tasks
@@ -16,7 +18,7 @@ class FilterList(filters.BaseFilterBackend):
         parent_id = request.query_params.get('parent_id')
         parent = request.query_params.get('parent')
         if goal_id:
-            queryset = queryset.filter(goal_id=goal_id)
+            queryset = queryset.filter(goals_id=goal_id)
         if parent_id:
             queryset = queryset.filter(parent_id=parent_id)
         if parent:
@@ -50,9 +52,9 @@ class TasksList(generics.ListCreateAPIView):
         order of rank and then by created_at
         """
         if self.request.user.is_authenticated:
-            return self.request.user.usertasks.all().order_by('deadline', 'created_at')
+            return self.request.user.tasks.all().order_by('deadline', 'created_at')
         else:
-            return UserTasks.objects.none()
+            return Tasks.objects.none()
 
 class UserTasksDetails(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -60,10 +62,6 @@ class UserTasksDetails(generics.RetrieveUpdateDestroyAPIView):
     pk will be the id of the user task
     """ 
 
-    serializer_class = UserTasksSerializer
+    serializer_class = TasksSerializer
     permission_classes = [OwnerOnly]
-    queryset = UserTasks.objects.all()
-     
-
-
-
+    queryset = Tasks.objects.all()

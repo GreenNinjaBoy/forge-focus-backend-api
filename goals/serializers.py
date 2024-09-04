@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import Goals
+from tasks.models import Tasks 
+from tasks.serializers import TasksSerializer 
 
 class GoalsSerializer(serializers.ModelSerializer):
     """
@@ -10,6 +12,7 @@ class GoalsSerializer(serializers.ModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
+    tasks = TasksSerializer(many=True, read_only=True, source='tasks_for_goals')
 
     def validate_image(self, value):
         """
@@ -46,5 +49,6 @@ class GoalsSerializer(serializers.ModelSerializer):
             'name',
             'reason',
             'image',
-            'is_owner'
+            'is_owner',
+            'tasks',
         ]
