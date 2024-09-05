@@ -11,25 +11,25 @@ def root_route(request):
     })
 
 
-# @api_view(['POST'])
-# def logout_route(request):
-#     response = Response()
-#     response.set_cookie(
-#         key=settings.JWT_AUTH_COOKIE,  
-#         value='',
-#         httponly=True,
-#         expires='Thu, 01 Jan 1970 00:00:00 GMT',
-#         max_age=0,
-#         samesite=settings.JWT_AUTH_SAMESITE,  
-#         secure=settings.JWT_AUTH_SECURE,  
-#     )
-#     response.set_cookie(
-#         key=settings.JWT_AUTH_REFRESH_COOKIE,  
-#         value='',
-#         httponly=True,
-#         expires='Thu, 01 Jan 1970 00:00:00 GMT',
-#         max_age=0,
-#         samesite=settings.JWT_AUTH_SAMESITE,  
-#         secure=settings.JWT_AUTH_SECURE,  
-#     )
+@api_view(['POST'])
+def logout_route(request):
+    response = Response()
+    response.set_cookie(
+        key=settings.JWT_AUTH_COOKIE,  
+        value='',
+        httponly=True,
+        expires='Thu, 01 Jan 1970 00:00:00 GMT',
+        max_age=0,
+        samesite=settings.JWT_AUTH_SAMESITE,  
+        secure=settings.JWT_AUTH_SECURE,  
+    )
+    response.set_cookie(
+        key=settings.JWT_AUTH_REFRESH_COOKIE,  
+        value='',
+        httponly=True,
+        expires='Thu, 01 Jan 1970 00:00:00 GMT',
+        max_age=0,
+        samesite=settings.JWT_AUTH_SAMESITE,  
+        secure=settings.JWT_AUTH_SECURE,  
+    )
     return response

@@ -29,7 +29,7 @@ class Tasks(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
-    deadline = models.DateTimeField(blank=True, null=True)  # Add deadline field
+    deadline = models.DateTimeField(blank=True, null=True)
     task_title = models.CharField(max_length=50)
     task_details = models.CharField(max_length=150, blank=True, null=True)
     value = models.CharField(max_length=150, blank=True, null=True)
