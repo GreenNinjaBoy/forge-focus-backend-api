@@ -1,7 +1,7 @@
 # serializers.py
-from django.utils import timezone
-from .models import Tasks
 from rest_framework import serializers
+from .models import Tasks
+from django.utils import timezone
 
 class TasksSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
