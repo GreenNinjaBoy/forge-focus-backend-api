@@ -74,6 +74,8 @@ INSTALLED_APPS = [
     'tasks',
 ]
 
+SITE_ID = 1
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -92,7 +94,7 @@ CORS_ALLOWED_ORIGINS = [
     
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'forge_focus_api.urls'
