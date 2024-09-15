@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django_extensions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -88,9 +89,10 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     os.environ.get('CLIENT_ORIGIN_DEV'),
     'https://5173-greenninjab-forgefocusp-jdlizymupf6.ws.codeinstitute-ide.net',
+    
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'forge_focus_api.urls'
