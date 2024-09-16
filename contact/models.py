@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class contact(models.Model):
+class Contact(models.Model):
     """
     Contact model, adds a contact message
     """
