@@ -92,6 +92,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     os.environ.get('CLIENT_ORIGIN_DEV'),
     'https://5173-greenninjab-forgefocusp-jdlizymupf6.ws.codeinstitute-ide.net',
+    'https://forge-focus-pp5-467431862e16.herokuapp.com',
     
 ]
 
