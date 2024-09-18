@@ -21,7 +21,7 @@ if 'DEV' in os.environ:
     ]
 else:
     authentication_classes = [
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     ]
 REST_FRAMEWORK = {
