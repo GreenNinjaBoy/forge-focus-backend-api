@@ -38,7 +38,7 @@ REST_AUTH = {
     'JWT_AUTH_HTTPONLY': False,
     'USER_DETAILS_SERIALIZER': 'forge_focus_api.serializers.CurrentUserSerializer',
     'JWT_AUTH_RETURN_EXPIRATION': True,
-    'JWT_AUTH_COOKIE_USE_CSRF': False,
+    'JWT_AUTH_COOKIE_USE_CSRF': True,
     'JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED': False,
 }
 
