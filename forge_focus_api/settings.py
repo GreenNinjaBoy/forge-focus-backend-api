@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 import dj_database_url
 import os
 import re
@@ -41,12 +42,16 @@ if not DEBUG:
 
 REST_AUTH = {
     'USE_JWT': True,
-    'JWT_AUTH_SECURE': True,
     'JWT_AUTH_COOKIE': 'my-app-auth',
     'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
     'JWT_AUTH_SAMESITE': 'None',
-    'JWT_AUTH_HTTPONLY': True,  # Changed to True for security
-    'USER_DETAILS_SERIALIZER': 'forge_focus_api.serializers.CurrentUserSerializer',
+    'JWT_AUTH_SECURE': True,
+    'JWT_AUTH_HTTPONLY': True,
+    'JWT_AUTH_RETURN_EXPIRATION': True,
+    'JWT_AUTH_COOKIE_USE_CSRF': False,
+    'JWT_AUTH_REFRESH_COOKIE_PATH': '/dj-rest-auth/token/refresh/',
+    'JWT_AUTH_LIFETIME': timedelta(minutes=5),  # Set this to a short time for testing
+    'JWT_AUTH_REFRESH_LIFETIME': timedelta(days=7),
 }
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
