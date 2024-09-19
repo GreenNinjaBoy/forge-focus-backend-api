@@ -15,37 +15,20 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-if 'DEV' in os.environ:
-    authentication_classes = [
-        'rest_framework.authentication.SessionAuthentication'
-    ]
-else:
-    authentication_classes = [
-        # 'rest_framework.authentication.BasicAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    ]
+# Updated authentication classes
+authentication_classes = [
+    'rest_framework.authentication.SessionAuthentication',
+    'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': authentication_classes,
-
-    
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [(
-    #     'rest_framework.authentication.SessionAuthentication'
-    #     if 'DEV' in os.environ
-    #     else
-    #     'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    # )],
-    
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d %b %y',
 }
 
-if 'DEV' not in os.environ:
-    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
-
+# Updated REST_AUTH settings
 REST_AUTH = {
     'USE_JWT': True,
     'JWT_AUTH_SECURE': True,
@@ -54,6 +37,9 @@ REST_AUTH = {
     'JWT_AUTH_SAMESITE': 'None',
     'JWT_AUTH_HTTPONLY': False,
     'USER_DETAILS_SERIALIZER': 'forge_focus_api.serializers.CurrentUserSerializer',
+    'JWT_AUTH_RETURN_EXPIRATION': True,
+    'JWT_AUTH_COOKIE_USE_CSRF': False,
+    'JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED': False,
 }
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -108,10 +94,8 @@ CORS_ALLOWED_ORIGINS = [
     os.environ.get('CLIENT_ORIGIN_DEV'),
     'https://5173-greenninjab-forgefocusp-jdlizymupf6.ws.codeinstitute-ide.net',
     'https://forge-focus-pp5-467431862e16.herokuapp.com',
-    
 ]
 
-# CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'forge_focus_api.urls'
@@ -148,7 +132,6 @@ else:
     }
     print("connected to external database")
 
-
 CSRF_TRUSTED_ORIGINS = [
     "https://*.codeanyapp.com",
     "https://*.herokuapp.com",
@@ -158,6 +141,12 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CSRF_COOKIE_NAME = 'csrftoken'
+
+# Updated CSRF and session settings
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
