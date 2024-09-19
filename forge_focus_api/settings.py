@@ -50,8 +50,11 @@ REST_AUTH = {
     'JWT_AUTH_RETURN_EXPIRATION': True,
     'JWT_AUTH_COOKIE_USE_CSRF': False,
     'JWT_AUTH_REFRESH_COOKIE_PATH': '/dj-rest-auth/token/refresh/',
-    'JWT_AUTH_LIFETIME': timedelta(minutes=5),  # Set this to a short time for testing
-    'JWT_AUTH_REFRESH_LIFETIME': timedelta(days=7),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
