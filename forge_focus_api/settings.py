@@ -16,6 +16,8 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DEBUG = 'DEV' in os.environ
+
 if 'DEV' in os.environ:
     authentication_classes = [
         'rest_framework.authentication.SessionAuthentication'
