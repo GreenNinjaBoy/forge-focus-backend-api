@@ -18,15 +18,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = 'DEV' in os.environ
 
-if DEBUG:
-    AUTHENTICATION_CLASSES = [
-        'rest_framework.authentication.SessionAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+if 'DEV' in os.environ:
+    authentication_classes = [
+        'rest_framework.authentication.SessionAuthentication'
     ]
 else:
-    AUTHENTICATION_CLASSES = [
+    authentication_classes = [
+        # 'rest_framework.authentication.BasicAuthentication',
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': authentication_classes,
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': AUTHENTICATION_CLASSES,
