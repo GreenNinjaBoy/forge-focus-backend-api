@@ -1,67 +1,76 @@
-# views.py
-from forge_focus_api.permissions import OwnerOnly
 from django.shortcuts import render
+from rest_framework import viewsets, generics, filters
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from forge_focus_api.permissions import OwnerOnly
 from .models import Tasks
 from .serializers import TasksSerializer
-from rest_framework import generics, filters
 
 class FilterList(filters.BaseFilterBackend):
     """
-    This is a custom filter which will
-    allow the user to filter their tasks
-    by goal_id, no parent and parent_id
+    Custom filter to allow users to filter tasks by goal_id, parent_id, and parent
     """
-
     def filter_queryset(self, request, queryset, view):
         goal_id = request.query_params.get('goal_id')
         parent_id = request.query_params.get('parent_id')
         parent = request.query_params.get('parent')
+        
         if goal_id:
             queryset = queryset.filter(goals_id=goal_id)
         if parent_id:
             queryset = queryset.filter(parent_id=parent_id)
         if parent:
             queryset = queryset.filter(parent=None)
+        
         return queryset
 
 class TasksList(generics.ListCreateAPIView):
     """
-    This view will return to a logged in user
-    a list of tasks that they have created and 
-    also allow that user to create new tasks
+    API view to retrieve list of tasks or create a new task
     """
-
     permission_classes = [IsAuthenticated]
     serializer_class = TasksSerializer
-    filter_backends = [
-        FilterList
-    ]
+    filter_backends = [FilterList]
 
     def perform_create(self, serializer):
-        """
-        This will add the owner data to 
-        the object before it is saved
-        """
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
-        """
-        Pulls all of the task instances that are linked
-        to the currently logged in user. This will be in
-        order of rank and then by created_at
-        """
         if self.request.user.is_authenticated:
             return self.request.user.tasks.all().order_by('deadline', 'created_at')
         else:
             return Tasks.objects.none()
 
-class UserTasksDetails(generics.RetrieveUpdateDestroyAPIView):
+class TasksViewSet(viewsets.ModelViewSet):
     """
-    View to return a specific user task where the
-    pk will be the id of the user task
-    """ 
-
+    A viewset for viewing and editing user tasks
+    """
     serializer_class = TasksSerializer
     permission_classes = [OwnerOnly]
     queryset = Tasks.objects.all()
+
+    def get_queryset(self):
+        return Tasks.objects.filter(owner=self.request.user)
+
+    @action(detail=True, methods=['patch'])
+    def toggle_complete(self, request, pk=None):
+        task = self.get_object()
+        task.completed = not task.completed
+        task.save()
+        serializer = self.get_serializer(task)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['post'])
+    def reuse(self, request, pk=None):
+        original_task = self.get_object()
+        new_task = Tasks.objects.create(
+            owner=self.request.user,
+            goals=original_task.goals,
+            task_title=original_task.task_title,
+            task_details=original_task.task_details,
+            deadline=None,  
+            completed=False
+        )
+        serializer = self.get_serializer(new_task)
+        return Response(serializer.data)

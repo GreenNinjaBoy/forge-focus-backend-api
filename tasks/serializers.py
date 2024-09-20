@@ -1,4 +1,3 @@
-# serializers.py
 from rest_framework import serializers
 from .models import Tasks
 from django.utils import timezone
@@ -33,6 +32,7 @@ class TasksSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_owner', 'goals', 'children', 'parent',
             'created_at', 'updated_at', 'active', 'deadline', 'task_title',
             'task_details', 'criteria', 'deadline_near', 'time_remaining',
+            'completed',  
         ]
         extra_kwargs = {
             'deadline': {'required': False, 'allow_null': True}

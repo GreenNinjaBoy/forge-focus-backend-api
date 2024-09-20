@@ -1,4 +1,3 @@
-# models.py
 from django.db import models
 from goals.models import Goals
 from django.contrib.auth.models import User
@@ -16,6 +15,7 @@ class Tasks(models.Model):
     task_details = models.CharField(max_length=150, blank=True, null=True)
     value = models.CharField(max_length=150, blank=True, null=True)
     criteria = models.CharField(max_length=150, blank=True, null=True)
+    completed = models.BooleanField(default=False)  # Add this line
 
     class Meta:
         ordering = ['-created_at']
