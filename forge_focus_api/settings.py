@@ -46,15 +46,13 @@ REST_AUTH = {
     'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
     'JWT_AUTH_SAMESITE': 'None',
     'JWT_AUTH_SECURE': True,
-    'JWT_AUTH_HTTPONLY': True,
-    'JWT_AUTH_RETURN_EXPIRATION': True,
-    'JWT_AUTH_COOKIE_USE_CSRF': False,
-    'JWT_AUTH_REFRESH_COOKIE_PATH': '/dj-rest-auth/token/refresh/',
 }
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
