@@ -1,5 +1,4 @@
 from pathlib import Path
-from datetime import timedelta
 import dj_database_url
 import os
 import re
@@ -16,46 +15,37 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = 'DEV' in os.environ
-
-if 'DEV' in os.environ:
-    authentication_classes = [
-        'rest_framework.authentication.SessionAuthentication'
-    ]
-else:
-    authentication_classes = [
-        # 'rest_framework.authentication.BasicAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    ]
-
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': authentication_classes,
+    'DEFAULT_AUTHENTICATION_CLASSES': [(
+        'rest_framework.authentication.SessionAuthentication'
+        if 'DEV' in os.environ
+        else
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+    )],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d %b %y',
 }
 
-if not DEBUG:
+if 'DEV' not in os.environ:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
         'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ]
 
 REST_AUTH = {
     'USE_JWT': True,
+    'JWT_AUTH_SECURE': True,
     'JWT_AUTH_COOKIE': 'my-app-auth',
     'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
     'JWT_AUTH_SAMESITE': 'None',
-    'JWT_AUTH_SECURE': True,
-}
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
+    'JWT_AUTH_HTTPONLY': False,
+    'USER_DETAILS_SERIALIZER': 'forge_focus_api.serializers.CurrentUserSerializer',
 }
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
+
+DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
@@ -105,8 +95,10 @@ CORS_ALLOWED_ORIGINS = [
     os.environ.get('CLIENT_ORIGIN_DEV'),
     'https://5173-greenninjab-forgefocusp-jdlizymupf6.ws.codeinstitute-ide.net',
     'https://forge-focus-pp5-467431862e16.herokuapp.com',
+
 ]
 
+# CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'forge_focus_api.urls'
@@ -129,7 +121,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'forge_focus_api.wsgi.application'
 
-if DEBUG:
+if 'DEV' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -143,6 +135,7 @@ else:
     }
     print("connected to external database")
 
+
 CSRF_TRUSTED_ORIGINS = [
     "https://*.codeanyapp.com",
     "https://*.herokuapp.com",
@@ -152,13 +145,6 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CSRF_COOKIE_NAME = 'csrftoken'
-
-if DEBUG:
-    SESSION_COOKIE_SECURE = False
-    CSRF_COOKIE_SECURE = False
-else:
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -185,11 +171,12 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = False
 
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
+
 USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
