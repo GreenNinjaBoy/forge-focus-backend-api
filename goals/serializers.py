@@ -51,4 +51,5 @@ class GoalsSerializer(serializers.ModelSerializer):
             'image',
             'is_owner',
             'tasks',
+            'tasks_for_goals',
         ]
