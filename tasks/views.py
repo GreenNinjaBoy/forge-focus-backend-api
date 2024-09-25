@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -48,3 +48,13 @@ class TasksViewSet(viewsets.ModelViewSet):
         task.save()
         serializer = self.get_serializer(task)
         return Response(serializer.data)
+
+class TasksList(generics.ListCreateAPIView):
+    serializer_class = TasksSerializer
+    permission_classes = [IsAuthenticated, OwnerOnly]
+
+    def get_queryset(self):
+        return Tasks.objects.filter(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
