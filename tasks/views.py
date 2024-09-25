@@ -15,6 +15,9 @@ class TasksViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, OwnerOnly]
     queryset = Tasks.objects.all()
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
     def get_queryset(self):
         return Tasks.objects.filter(owner=self.request.user)
 

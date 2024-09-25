@@ -26,14 +26,14 @@ class TasksSerializer(serializers.ModelSerializer):
         days_remaining = self.get_time_remaining(obj)
         return days_remaining is not None and days_remaining <= 7
 
-    class Meta:
-        model = Tasks
-        fields = [
-            'id', 'owner', 'is_owner', 'goals', 'children', 'parent',
-            'created_at', 'updated_at', 'active', 'deadline', 'task_title',
-            'task_details', 'criteria', 'deadline_near', 'time_remaining',
-            'completed',  
-        ]
-        extra_kwargs = {
-            'deadline': {'required': False, 'allow_null': True}
-        }
+        class Meta:
+
+            model = Tasks
+
+            fields = [
+                'id', 'owner', 'is_owner', 'goals', 'children', 'parent',
+                'created_at', 'updated_at', 'active', 'deadline', 'task_title',
+                'task_details', 'criteria', 'deadline_near', 'time_remaining',
+                'completed',
+                ]
+            read_only_fields = ['owner', 'is_owner', 'created_at', 'updated_at']
