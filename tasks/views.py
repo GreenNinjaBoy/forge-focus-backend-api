@@ -1,53 +1,18 @@
-from django.shortcuts import render
-from rest_framework import viewsets, generics, filters
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from forge_focus_api.permissions import OwnerOnly
+from django.utils import timezone
 from .models import Tasks
 from .serializers import TasksSerializer
-
-class FilterList(filters.BaseFilterBackend):
-    """
-    Custom filter to allow users to filter tasks by goal_id, parent_id, and parent
-    """
-    def filter_queryset(self, request, queryset, view):
-        goal_id = request.query_params.get('goal_id')
-        parent_id = request.query_params.get('parent_id')
-        parent = request.query_params.get('parent')
-        
-        if goal_id:
-            queryset = queryset.filter(goals_id=goal_id)
-        if parent_id:
-            queryset = queryset.filter(parent_id=parent_id)
-        if parent:
-            queryset = queryset.filter(parent=None)
-        
-        return queryset
-
-class TasksList(generics.ListCreateAPIView):
-    """
-    API view to retrieve list of tasks or create a new task
-    """
-    permission_classes = [IsAuthenticated]
-    serializer_class = TasksSerializer
-    filter_backends = [FilterList]
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return self.request.user.tasks.all().order_by('deadline', 'created_at')
-        else:
-            return Tasks.objects.none()
+from forge_focus_api.permissions import OwnerOnly
 
 class TasksViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing user tasks
     """
     serializer_class = TasksSerializer
-    permission_classes = [OwnerOnly]
+    permission_classes = [IsAuthenticated, OwnerOnly]
     queryset = Tasks.objects.all()
 
     def get_queryset(self):
@@ -69,8 +34,17 @@ class TasksViewSet(viewsets.ModelViewSet):
             goals=original_task.goals,
             task_title=original_task.task_title,
             task_details=original_task.task_details,
-            deadline=None,  
+            deadline=timezone.now() + timezone.timedelta(days=7),  # Set deadline to 7 days from now
             completed=False
         )
         serializer = self.get_serializer(new_task)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(detail=True, methods=['patch'])
+    def reset(self, request, pk=None):
+        task = self.get_object()
+        task.deadline = timezone.now() + timezone.timedelta(days=7)
+        task.completed = False
+        task.save()
+        serializer = self.get_serializer(task)
         return Response(serializer.data)
