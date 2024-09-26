@@ -17,7 +17,7 @@ class Goals(models.Model):
     name = models.CharField(max_length=50)
     reason = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to='images', default='../default_post_pdrfdn', blank=True
+        upload_to='images/', default='../default_post_pdrfdn', blank=True
     )
 
 
