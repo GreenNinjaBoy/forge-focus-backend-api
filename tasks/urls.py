@@ -2,9 +2,11 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
 
+# Create a router and register the TasksViewSet
 router = DefaultRouter()
 router.register(r'tasks', views.TasksViewSet, basename='task')
 
+# Define the URL patterns for the tasks app
 urlpatterns = [
     path('', include(router.urls)),
     path('tasks-list/', views.TasksList.as_view(), name='tasks-list'),
