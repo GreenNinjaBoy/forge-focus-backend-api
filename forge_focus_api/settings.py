@@ -28,12 +28,9 @@ REST_FRAMEWORK = {
 if 'DEV' not in os.environ:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
         'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ]
 
-REST_USE_JWT = True
-JWT_AUTH_COOKIE = 'my-app-auth'
-JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
-
 REST_AUTH = {
     'USE_JWT': True,
     'JWT_AUTH_SECURE': True,
@@ -44,15 +41,9 @@ REST_AUTH = {
     'USER_DETAILS_SERIALIZER': 'forge_focus_api.serializers.CurrentUserSerializer',
 }
 
-REST_AUTH = {
-    'USE_JWT': True,
-    'JWT_AUTH_SECURE': True,
-    'JWT_AUTH_COOKIE': 'my-app-auth',
-    'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
-    'JWT_AUTH_SAMESITE': 'None',
-    'JWT_AUTH_HTTPONLY': False,
-    'USER_DETAILS_SERIALIZER': 'forge_focus_api.serializers.CurrentUserSerializer',
-}
+
+REST_SESSION_LOGIN = True
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
