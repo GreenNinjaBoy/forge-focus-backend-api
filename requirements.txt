@@ -16,5 +16,6 @@ gunicorn==23.0.0
 oauthlib==3.2.2
 pillow==10.4.0
 psycopg==3.2.2
+pygraphviz==1.13
 PyJWT==2.9.0
 sqlparse==0.5.1
