@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Tasks
 from django.utils import timezone
 
+
 class TasksSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
@@ -17,10 +18,10 @@ class TasksSerializer(serializers.ModelSerializer):
     def get_time_remaining(self, obj):
         future_deadline = obj.deadline
         if future_deadline:
-           today_aware = timezone.now()
-           days_remaining = (future_deadline - today_aware).days
-           return days_remaining
-        return None 
+            today_aware = timezone.now()
+            days_remaining = (future_deadline - today_aware).days
+            return days_remaining
+        return None
 
     def get_deadline_near(self, obj):
         days_remaining = self.get_time_remaining(obj)

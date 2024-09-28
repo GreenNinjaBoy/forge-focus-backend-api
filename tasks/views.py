@@ -7,6 +7,7 @@ from .models import Tasks
 from .serializers import TasksSerializer
 from forge_focus_api.permissions import OwnerOnly
 
+
 class TasksViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing user tasks
@@ -37,7 +38,7 @@ class TasksViewSet(viewsets.ModelViewSet):
             goals=original_task.goals,
             task_title=original_task.task_title,
             task_details=original_task.task_details,
-            deadline=timezone.now() + timezone.timedelta(days=7),  # Set deadline to 7 days from now
+            deadline=timezone.now() + timezone.timedelta(days=7),
             completed=False
         )
         serializer = self.get_serializer(new_task)
@@ -51,6 +52,7 @@ class TasksViewSet(viewsets.ModelViewSet):
         task.save()
         serializer = self.get_serializer(task)
         return Response(serializer.data)
+
 
 class TasksList(generics.ListCreateAPIView):
     serializer_class = TasksSerializer
