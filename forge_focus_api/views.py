@@ -10,7 +10,17 @@ def root_route(request):
         'message': "Welcome to the Forge Focus API"
     })
 
-
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def open_debug_view(request):
+    return Response({
+        'message': 'Debug view accessible',
+        'user': str(request.user),
+        'auth': str(request.auth),
+        'is_authenticated': request.user.is_authenticated,
+        'headers': dict(request.headers),
+    })
+    
 @api_view(['POST'])
 def logout_route(request):
     response = Response()

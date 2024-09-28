@@ -16,14 +16,17 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': [(
+        'rest_framework.authentication.SessionAuthentication'
+        if 'DEV' in os.environ
+        else
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    ],
+    )],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DATETIME_FORMAT': '%d %b %y',
 }
+
 
 if 'DEV' not in os.environ:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
@@ -40,10 +43,6 @@ REST_AUTH = {
     'JWT_AUTH_HTTPONLY': False,
     'USER_DETAILS_SERIALIZER': 'forge_focus_api.serializers.CurrentUserSerializer',
 }
-
-
-REST_SESSION_LOGIN = True
-ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
