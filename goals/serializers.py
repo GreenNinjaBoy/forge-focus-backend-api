@@ -1,24 +1,26 @@
 from rest_framework import serializers
 from .models import Goals
-from tasks.models import Tasks 
-from tasks.serializers import TasksSerializer 
+from tasks.models import Tasks
+from tasks.serializers import TasksSerializer
+
 
 class GoalsSerializer(serializers.ModelSerializer):
     """
-    This is the serializer for the goals model. It will change the owner.id into 
-    owner.username. It will add an extra field 'is_owner'. The serializer will 
-    prevent large images from being saved to the database and changes the date
-    fields into an easier format.
+    This is the serializer for the goals model. It will change the
+    owner.id into owner.username. It will add an extra field 'is_owner'.
+    The serializer will prevent large images from being saved to the
+    database and changes the date fields into an easier format.
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
-    tasks = TasksSerializer(many=True, read_only=True, source='tasks_for_goals')
+    tasks = TasksSerializer(many=True, read_only=True,
+                            source='tasks_for_goals')
 
     def validate_image(self, value):
         """
-        This is a custom validation method used 
+        This is a custom validation method used
         for the image field.
-        This was taken from the Django rest walkthrough 
+        This was taken from the Django rest walkthrough
         """
 
         if value.size > 1024 * 1024 * 2:
