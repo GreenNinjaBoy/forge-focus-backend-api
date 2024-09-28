@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import root_route
+from .views import root_route, open_debug_view, logout_route
 
 urlpatterns = [
     path('', root_route),
