@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 
 
 class Tasks(models.Model):
+    """
+    Model representing a task.
+    A task can be associated with a goal and can have nested sub-tasks.
+    """
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                               related_name="tasks")
     goals = models.ForeignKey(Goals, on_delete=models.CASCADE,
@@ -23,10 +27,15 @@ class Tasks(models.Model):
     criteria = models.CharField(max_length=150, blank=True, null=True)
     completed = models.BooleanField(default=False)
 
+    class Meta:
+        """
+        Meta class for the Tasks model.
+        Defines the default ordering for the model.
+        """
+        ordering = ['-created_at']
 
-class Meta:
-    ordering = ['-created_at']
-
-
-def __str__(self):
-    return f'{self.id} {self.task_title}'
+    def __str__(self):
+        """
+        String representation of the task.
+        """
+        return f'{self.id} {self.task_title}'
