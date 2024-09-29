@@ -116,6 +116,10 @@ The images below show the results for each.
 
 ## Manual Testing
 
+**Important Note**
+
+All the manual testing when directly logged into the API was conducted while 'DEV' was active within the os.envrion the reason for this was I was unable to log directly into the deployed heroku API site. All frontend tests in relation to this were conducted within the deployed frontend heroku site.
+
 ### Authorisation
 
 | url | http request | expected outcome | result | Frontend |
@@ -125,6 +129,24 @@ The images below show the results for each.
 | dj-rest-auth/login/ | POST | User Authenticated | PASS | PASS |
 | | | Invalid fields handled | PASS | PASS |
 | dj-rest-auth/logout/ | POST | User logged out and token object deleted | PASS | PASS |
+
+### Contact
+
+| URL | HTTP Request | Expected Outcome | Result | Frontend |
+|-----|--------------|-------------------|--------|----------|
+| contact/| POST | New contact created for valid data<br>Status code 201 Created<br>Response includes contact details with ID and timestamp | PASS | PASS |
+| contact/ | POST (invalid data) | Error message for name over 50 characters<br>Error message for invalid email format<br>Error message for message over 250 characters<br>Error message for empty required fields<br>Status code 400 Bad Request | PASS | PASS |
+| contact/list/ | GET (as superuser) | List of all contact messages<br>Contacts ordered by created_at (newest first)<br>Status code 200 OK | PASS | PASS |
+| contact/list/ | GET (as regular user) | Permission denied message<br>Status code 403 Forbidden | PASS | PASS |
+| contact/list/ | GET (not authenticated) | Authentication required message<br>Status code 401 Unauthorized | PASS | PASS |
+
+Additional Tests:
+
+| Test Case | Expected Outcome | Result | Frontend |
+|-----------|------------------|--------|----------|
+| Create contact with max length fields | Contact created successfully | | |
+| Create multiple contacts and check ordering | Newest contacts appear first in list | | |
+| Check string representation in admin interface | Contact's string representation matches its message | | |
 
 ### Goals model
 
@@ -176,6 +198,11 @@ Key notes:
 The endpoints which fail in deployed api do work when accessed from the frontend. The same issue was also found in the walkthrough api.
 
 ## Unit Tests for Django Models
+
+**Important note**
+
+Again with the manual tests the unit tests were conducted when connected to the db.sqlite3 databaseas it was unable to conect to the external database.
+
 
 This project uses Django's built-in testing framework to ensure the integrity and functionality of the data models. Test suites for each of the main models: Contact, Goals, and Tasks.
 
