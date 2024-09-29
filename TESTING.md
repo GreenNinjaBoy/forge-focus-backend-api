@@ -6,7 +6,7 @@
 
 [Manual Testing](#manual-testing)
 
-[Automated Testing](#automated-testing)
+[Unit Testing](#unit-testing)
 
 ---
 
@@ -143,7 +143,7 @@ The images below show the results for each.
 | | | Logged in user trying to get a goal that doesn't belong to them returns 403 error | PASS | PASS |
 | | | Logged out user cannot make get request 401 error | PASS | PASS |
 | | PUT | Logged in user can edit their goal | Fail in deployed API | PASS |
-| | PATCH | Logged in user can edit their goal | Fail in deployed API | Unused end point |
+| | PATCH | Logged in user can edit their goal | Fail in deployed API | PASS |
 | | DELETE | Logged in user can delete their goal | Fail in deployed API | PASS |
 
 Key notes:
@@ -169,8 +169,69 @@ The endpoints which fail in deployed api do work when accessed from the frontend
 | | | Logged in user trying to get a tasks that doesn't belong to them returns 403 error | PASS | Unused endpoint |
 | | | Logged out user cannot make get request 401 error | PASS | Unused endpoint |
 | | PUT | Logged in user can edit their tasks | Fail in deployed API | PASS |
-| | PATCH | Logged in user can edit their tasks | Fail in deployed API | Unused endpoint |
+| | PATCH | Logged in user can edit their tasks | Fail in deployed API | PASS |
 | | DELETE | Logged in user can delete their tasks | Fail in deployed API | PASS |
 
 Key notes:
 The endpoints which fail in deployed api do work when accessed from the frontend. The same issue was also found in the walkthrough api.
+
+## Unit Tests for Django Models
+
+This project uses Django's built-in testing framework to ensure the integrity and functionality of the data models. Test suites for each of the main models: Contact, Goals, and Tasks.
+
+**Test Creation Process**
+
+Test File Structure: 
+For each model, a seperate test file was created tests.py within each apps respective directory.
+
+Test Case Classes: 
+Within each test file, a test case class was defined (e.g., TestTasksModel) that inherits from django.test.TestCase.
+
+Setup Method: 
+A setUp method was implemented to create necessary objects (like test users or related model instances) that are used across multiple tests.
+
+Individual Test Methods: Individual test methods were written for different aspects of each model:
+
+Basic object creation and field values
+String representation (__str__ method)
+Field constraints (max length, blank/null properties)
+Default values
+Relationships between models
+Ordering
+Cascade deletion behavior
+Auto-update fields (like updated_at)
+
+Edge Cases: Tests for edge cases and potential error conditions were included to ensure robust error handling.
+
+Database Interactions: The tests interact with a test database, to test database operations without affecting the production database.
+
+**Running Tests**
+ 
+ Below you will find each code that was used to run the individual test.py files and their outcome.
+
+ <details>
+ 
+ <summary>python manage.py test contact.tests</summary>
+
+ ![contact-unit-test-results](documentation/unit_test_results/contact_unit_test_results.png)
+
+ </details> 
+
+  <details>
+ 
+ <summary>python manage.py test goals.tests</summary>
+
+ ![goals-unit-test-results](documentation/unit_test_results/goals_unit_test_results.png)
+ 
+ </details> 
+
+  <details>
+ 
+ <summary>python manage.py test tasks.tests</summary>
+
+ ![tasks-unit-test-results](documentation/unit_test_results/tasks_unit_test_results.png)
+ 
+ </details> 
+
+
+
