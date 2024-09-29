@@ -106,7 +106,7 @@ CORS_ALLOWED_ORIGINS = [
 
 ]
 
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'forge_focus_api.urls'
@@ -150,7 +150,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.gitpod.io",
     "https://*.codeinstitute-ide.net",
     "https://3000-greenninjab-forgefocusp-neyw2jhfm9n.ws.codeinstitute-ide.net/",
-    "https://localhost/",
+    "https://localhost",
 ]
 
 CSRF_COOKIE_NAME = 'csrftoken'
