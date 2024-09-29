@@ -150,6 +150,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.gitpod.io",
     "https://*.codeinstitute-ide.net",
     "https://3000-greenninjab-forgefocusp-neyw2jhfm9n.ws.codeinstitute-ide.net/",
+    "https://localhost/",
 ]
 
 CSRF_COOKIE_NAME = 'csrftoken'
