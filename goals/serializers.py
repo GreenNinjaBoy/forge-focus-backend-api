@@ -42,6 +42,11 @@ class GoalsSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.owner
 
+    def get_image(self, obj):
+        if obj.image:
+            return self.context['request'].build_absolute_uri(obj.image.url)
+        return self.context['request'].build_absolute_uri(f"{settings.MEDIA_URL}images/default_post_pdrfdn.png")
+
     class Meta:
         model = Goals
         fields = [

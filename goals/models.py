@@ -21,11 +21,6 @@ class Goals(models.Model):
         upload_to='images/', default='../default_post_pdrfdn', blank=True
     )
 
-    def get_image_url(self):
-        if self.image and hasattr(self.image, 'url'):
-            return self.image.url
-        return f"{settings.MEDIA_URL}images/default_post_pdrfdn.png"
-
     # The Meta class is indented to be inside the Goals class
     # because it provides metadata specifically for the Goals model.
     # This indentation indicates that Meta is an inner class of Goals.
