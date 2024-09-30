@@ -18,7 +18,7 @@ class Goals(models.Model):
     name = models.CharField(max_length=50)
     reason = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to='media/images/', default='https://res.cloudinary.com/dcnhbmqy4/image/upload/v1713429424/media/images/default_post_pdrfdn.jpg', blank=True
+        upload_to='images/', default='https://res.cloudinary.com/dcnhbmqy4/image/upload/v1713429424/media/images/default_post_pdrfdn.jpg', blank=True
     )
 
     # The Meta class is indented to be inside the Goals class
