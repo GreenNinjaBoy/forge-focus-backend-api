@@ -15,6 +15,8 @@ class GoalsSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     tasks = TasksSerializer(many=True, read_only=True,
                             source='tasks_for_goals')
+    image = serializers.ImageField(required=False)
+    image_url = serializers.SerializerMethodField()
 
     def validate_image(self, value):
         """
@@ -51,7 +53,13 @@ class GoalsSerializer(serializers.ModelSerializer):
             'name',
             'reason',
             'image',
+            'image_url',
             'is_owner',
             'tasks',
             'tasks_for_goals',
         ]
+
+    def get_image_url(self, obj):
+        if obj.image:
+            return obj.image.url
+        return None
