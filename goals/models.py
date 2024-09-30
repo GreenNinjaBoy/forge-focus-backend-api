@@ -18,8 +18,13 @@ class Goals(models.Model):
     name = models.CharField(max_length=50)
     reason = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to='images/', default='images/default_post_pdrfdn', blank=True
+        upload_to='images/', default='../default_post_pdrfdn', blank=True
     )
+
+    def get_image(self):
+        if self.image:
+            return f"{settings.API_URL}/media/{self.image.name}"
+        return f"{settings.API_URL}/media/images/default_post_pdrfdn"
 
     # The Meta class is indented to be inside the Goals class
     # because it provides metadata specifically for the Goals model.

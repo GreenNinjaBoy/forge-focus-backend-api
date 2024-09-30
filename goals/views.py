@@ -2,6 +2,15 @@ from forge_focus_api.permissions import OwnerOnly
 from .serializers import GoalsSerializer
 from .models import Goals
 from rest_framework import generics, permissions
+from cloudinary.utils import cloudinary_url
+
+
+def serve_cloudinary_image(request, path):
+    cloudinary_url, options = cloudinary_url(path)
+    response = requests.get(cloudinary_url)
+    if response.status_code == 200:
+        return HttpResponse(response.content, content_type=response.headers['Content-Type'])
+    return HttpResponse(status=404)
 
 
 class GoalsList(generics.ListCreateAPIView):
