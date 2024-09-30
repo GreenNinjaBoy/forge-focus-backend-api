@@ -43,6 +43,11 @@ class GoalsSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.owner
 
+    def get_image_url(self, obj):
+        if obj.image and hasattr(obj.image, 'url'):
+            return obj.image.url
+        return 'https://res.cloudinary.com/dcnhbmqy4/image/upload/v1713429424/media/images/default_post_pdrfdn.jpg'
+
     class Meta:
         model = Goals
         fields = [
@@ -58,8 +63,3 @@ class GoalsSerializer(serializers.ModelSerializer):
             'tasks',
             'tasks_for_goals',
         ]
-
-    def get_image_url(self, obj):
-        if obj.image:
-            return obj.image.url
-        return None
