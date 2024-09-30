@@ -1,11 +1,18 @@
-## Forge Focus Api
-Created by Jamie Connell Student of CodeInstitute 2024
+<div align="center">
+	
+# Forge Focus
+**Created By Jamie Connell**
+**Student Of Code Institute 2024**
+</div>
 
-This is an API which will provide full CRUD functionality for the management of task data. This will include areas such as goals, and sub categories within a users main goal. This API utilizes the Django-Rest-Framework and is created to provide backend functionality to the "Forge Focus" application. 
+![am-i-responsive-image](https://github.com/GreenNinjaBoy/forge-focus-pp5-frontend/blob/main/src/assets/documentation/README-images/am-i-responsive-image.png?raw=true)
 
-**Link for API will go here when available**
-**Link for deployed Heroku App will go here when available**
-**Link for frontend react repository will go here when available**
+Forge Focus is a task management application that allows users to creatre, manage and orgasnise goals that they wish to acieve.
+These goals can be everyday goals, or more spesific to a certain apect of the users live.
+
+[Forge Focus Live App](https://forge-focus-pp5-467431862e16.herokuapp.com/)
+[Forge Focus Live API](https://forge-focus-api-backend-83543ef108af.herokuapp.com/)
+[Forge Focus Front End Repository](https://github.com/GreenNinjaBoy/forge-focus-pp5-frontend)
 
 ## Table of Contents
 - [Design of the API](#Design-of-the-API)
@@ -166,6 +173,24 @@ Introduce gamification features like achievement badges or a point system to inc
 
 These future features would significantly enhance the functionality and user experience of the Forge Focus application. This is providing a road map in which
 I can use to further enhance the application.
+
+#### **ERD**
+
+<details>
+<summary> ERD </summary>
+
+![Data Schems](erd.png)
+
+This can be generated within the terminal by using the following commands:
+
+1. Enter the following command: "pip install pip install django-extensions"
+2. Within the 'INSTALLED_APPS' section of the settings.py ensure 'django_extensions', is present.
+3. Enter the following command: "pip install pygraphviz"
+4. Enter the following command: "./manage.py graph_models -a -g -o my_project_visualized.png"
+
+Now a .png image will be generated from python showing you ERD.
+
+</details>
 
 # Technologies Used
 
