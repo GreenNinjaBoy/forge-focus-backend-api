@@ -45,7 +45,7 @@ class GoalsSerializer(serializers.ModelSerializer):
     def get_image(self, obj):
         if obj.image:
             return self.context['request'].build_absolute_uri(obj.image.url)
-        return self.context['request'].build_absolute_uri(f"{settings.MEDIA_URL}images/default_post_pdrfdn.png")
+        return 'https://res.cloudinary.com/dcnhbmqy4/image/upload/v1713429424/media/images/default_post_pdrfdn.jpg'
 
     class Meta:
         model = Goals
