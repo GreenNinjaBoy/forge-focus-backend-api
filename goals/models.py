@@ -2,7 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
+
 class Goals(models.Model):
+    """
+    This is the main goals model which will
+    store the users chosen goals that they wish to
+    achieve.
+    """
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

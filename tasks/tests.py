@@ -7,10 +7,12 @@ from datetime import timedelta
 from .models import Tasks
 from goals.models import Goals
 
+
 class TestTasksModel(TestCase):
     def setUp(self):
         # Create a test user
-        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.user = User.objects.create_user(
+                username='testuser', password='12345')
         # Create a test goal
         self.goal = Goals.objects.create(owner=self.user, name="Test Goal")
 
@@ -78,7 +80,8 @@ class TestTasksModel(TestCase):
         task.full_clean()  # This should not raise a ValidationError
 
     def test_nested_tasks(self):
-        parent_task = Tasks.objects.create(owner=self.user, task_title="Parent Task")
+        parent_task = Tasks.objects.create(
+                owner=self.user, task_title="Parent Task")
         child_task = Tasks.objects.create(
             owner=self.user,
             task_title="Child Task",
@@ -94,7 +97,8 @@ class TestTasksModel(TestCase):
         self.assertEqual(Tasks.objects.count(), 0)
 
     def test_goal_relationship(self):
-        task = Tasks.objects.create(owner=self.user, task_title="Test Task", goals=self.goal)
+        task = Tasks.objects.create(
+            owner=self.user, task_title="Test Task", goals=self.goal)
         self.assertEqual(task.goals, self.goal)
         self.assertTrue(self.goal.tasks_for_goals.filter(id=task.id).exists())
 
