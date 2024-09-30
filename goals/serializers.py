@@ -42,9 +42,6 @@ class GoalsSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.owner
 
-    def get_image_url(self, obj):
-        return obj.get_image_url()
-
     class Meta:
         model = Goals
         fields = [
@@ -59,3 +56,7 @@ class GoalsSerializer(serializers.ModelSerializer):
             'tasks',
             'tasks_for_goals',
         ]
+    def get_image(self, obj):
+        if obj.image:
+            return obj.image.url
+        return '/path/to/your/default/image.jpg'
